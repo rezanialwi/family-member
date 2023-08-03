@@ -8,6 +8,9 @@
     * php artisan migrate:fresh --seed
     * php artisan serve
 
+## How to Acces CRUD
+    *http://127.0.0.1:8000/family-members
+
 ## How to Use API 
     * GET /api/family-members - Get all family members
     * POST /api/family-members - Create a new family member
