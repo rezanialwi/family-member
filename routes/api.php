@@ -16,7 +16,9 @@ use App\Http\Controllers\FamilyMemberApiController;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
-Route::resource('family-members', FamilyMemberApiController::class);
+Route::get('family-members', [FamilyMemberApiController::class, 'index']);
+Route::post('family-members', [FamilyMemberApiController::class, 'store']);
+Route::get('family-members/{id}', [FamilyMemberApiController::class, 'show']);
+Route::post('family-members/{id}', [FamilyMemberApiController::class, 'update']);
+Route::delete('family-members/{id}', [FamilyMemberApiController::class, 'destroy']);
+

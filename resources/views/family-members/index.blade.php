@@ -19,7 +19,7 @@
                 <tr>
                     <td>{{ $familyMember->name }}</td>
                     <td>{{ $familyMember->gender }}</td>
-                    <td>{{ optional($familyMember->parent)->name }}</td>
+                    <td>{{ optional($familyMember->parent)->name ?? '-' }}</td>
                     <td>
                         <a href="{{ route('family-members.edit', $familyMember->id) }}" class="btn btn-primary btn-sm">Edit</a>
                         <form action="{{ route('family-members.destroy', $familyMember->id) }}" method="POST" style="display: inline-block">

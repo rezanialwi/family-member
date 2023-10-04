@@ -9,7 +9,8 @@ class FamilyMemberApiController extends Controller
 {
     public function index()
     {
-        return FamilyMember::all();
+        $familyMembers = FamilyMember::all();
+        return $this->responseGet($familyMembers);
     }
 
     public function store(Request $request)
@@ -20,29 +21,35 @@ class FamilyMemberApiController extends Controller
             'parent_id' => 'nullable|exists:family_members,id',
         ]);
 
-        return FamilyMember::create($request->all());
+        $familyMember = FamilyMember::create($request->all());
+        return $this->responsePost($familyMember); // 201 Created
     }
 
     public function show(FamilyMember $familyMember)
     {
-        return $familyMember;
+        return $this->responseGet($familyMember);
     }
 
-    public function update(Request $request, FamilyMember $familyMember)
+    public function update(Request $request, $id)
     {
         $request->validate([
             'name' => 'required|string|max:255',
             'gender' => 'required|in:M,F',
             'parent_id' => 'nullable|exists:family_members,id',
         ]);
-
+        $familyMember = FamilyMember::find($id);
+        if (!$familyMember) {
+            return $this->responsePatch(null, 404);
+        }
         $familyMember->update($request->all());
-        return $familyMember;
+        return $this->responsePatch($familyMember);
     }
 
-    public function destroy(FamilyMember $familyMember)
+    public function destroy($id)
     {
+        $familyMember = FamilyMember::findOrFail($id);
+
         $familyMember->delete();
-        return response()->json(['message' => 'Family member deleted successfully']);
+        return $this->responseDelete($familyMember);
     }
 }
